@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+/* Lighthouse beacon glow animation */
+@keyframes beacon-glow {
+  0%, 100% { 
+    filter: brightness(1);
+  }
+  50% { 
+    filter: brightness(1.25);
+  }
+}
+
+.animate-beacon-glow {
+  animation: beacon-glow 6s ease-in-out infinite;
+}
