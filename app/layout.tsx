@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google"; // Added Outfit
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' }); // Configure Outfit
 
 export const metadata: Metadata = {
-  title: "Beacon Analytics | Healthcare Intelligence & AI Transformation",
-  description: "Strategic intelligence for healthcare investment and transformation. Forensic analytics, AI automation, and market insights for NHS and private equity.",
+  title: "Beacon | Enterprise Healthcare Intelligence",
+  description: "Enterprise intelligence platform for healthcare systems. Transform fragmented data into executive-level decision advantage.",
 };
 
 export default function RootLayout({
@@ -16,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth light" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
+      <body className={`${inter.variable} ${outfit.variable} font-sans bg-background text-foreground`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           {children}
         </ThemeProvider>
       </body>

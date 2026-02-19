@@ -1,82 +1,95 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
-import { DottedSurface } from '@/components/ui/dotted-surface';
+import Link from 'next/link';
+import { AnimatedGridPattern } from './ui/animated-grid-pattern';
+import { cn } from '@/lib/utils';
 
 export default function Hero() {
-  const handleScrollToServices = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const element = document.querySelector('#services');
+    const element = document.querySelector(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const handleScrollToContact = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const element = document.querySelector('#contact');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleScrollDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    window.scrollBy({ top: window.innerHeight * 0.5, behavior: 'smooth' });
   };
 
   return (
-    <section className="relative w-full min-h-[85vh] md:min-h-screen bg-gradient-to-br from-[#0A0E1A] via-[#0F1729] to-[#1a2332] flex items-center justify-center pt-20 md:pt-24 overflow-hidden">
-      {/* DottedSurface background with animated dots */}
-      <DottedSurface className="absolute inset-0" />
-
-      {/* Subtle radial gradient overlay for depth */}
-      <div className="absolute inset-0 bg-radial opacity-30 pointer-events-none"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-24 relative z-10">
-        <div className="flex flex-col items-center text-center space-y-6 md:space-y-8 lg:space-y-10">
-          {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-            BEACON ANALYTICS
-          </h1>
-
-          {/* Subheading */}
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-white/90 max-w-3xl px-2">
-            Strategic Intelligence for Healthcare Transformation
-          </h2>
-
-          {/* Simplified Description */}
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/85 max-w-2xl leading-relaxed px-2">
-            From investment due diligence to AI-powered service delivery—we illuminate the data that drives decisions.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col w-full sm:flex-row sm:w-auto items-center justify-center gap-4 mt-8 md:mt-10 lg:mt-12 px-2">
-            <button
-              onClick={handleScrollToServices}
-              className="w-full sm:w-auto h-12 sm:h-auto px-6 sm:px-10 py-3 sm:py-4 bg-cyan text-white font-bold text-base sm:text-lg rounded-lg hover:bg-cyan/90 transition-all duration-300 shadow-xl hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-cyan/50 active:scale-95"
-            >
-              Explore Services
-            </button>
-            <button
-              onClick={handleScrollToContact}
-              className="w-full sm:w-auto h-12 sm:h-auto px-6 sm:px-10 py-3 sm:py-4 border-2 border-white text-white font-semibold text-base sm:text-lg rounded-lg hover:bg-white hover:text-navy transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/40 active:scale-95"
-            >
-              Book Consultation
-            </button>
-          </div>
-        </div>
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
+      {/* Background Elements */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Animated grid pattern with framer-motion */}
+        <AnimatedGridPattern
+          width={32}
+          height={32}
+          numSquares={60}
+          maxOpacity={0.18}
+          duration={2.2}
+          repeatDelay={0.35}
+          className={cn(
+            "text-white fill-white stroke-white",
+            "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-35%] h-[220%] skew-y-12",
+          )}
+        />
+        
+        {/* Reduced glow intensity */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/3 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-indigo-500/3 rounded-full blur-[120px]"></div>
+        
+        {/* Strong radial vignette overlay for readability */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,transparent_0%,rgba(0,0,0,0.4)_100%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background"></div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        <button
-          onClick={handleScrollDown}
-          className="text-white/80 hover:text-white transition-all duration-300 animate-bounce opacity-90 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/30 rounded-full p-2"
-          aria-label="Scroll down"
-        >
-          <ChevronDown size={32} />
-        </button>
+      <div className="container relative z-10 px-4 md:px-6 max-w-6xl mx-auto text-center">
+        <div className="pointer-events-none absolute inset-x-8 -top-6 -bottom-6 rounded-[32px] bg-gradient-to-b from-black/40 via-black/10 to-transparent blur-2xl"></div>
+        <div className="relative z-10">
+          {/* Top badge pill */}
+          <div className="inline-block mb-8 px-3.5 py-1.5 rounded-full border border-white/10 bg-transparent backdrop-blur-sm">
+            <span className="text-[10px] font-medium text-slate-300 tracking-[0.15em] uppercase">
+              Beacon Digital Health
+            </span>
+          </div>
+
+          {/* Main Headline */}
+          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white/90 mb-8 max-w-5xl mx-auto leading-[1.15]">
+            <span className="text-white">Operational intelligence</span>{' '}
+            <span className="bg-gradient-to-b from-white/80 to-white/40 bg-clip-text text-transparent">
+              for digital health systems
+            </span>
+          </h1>
+
+          {/* Supporting paragraph */}
+          <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+            Beacon builds analytics, dashboards and workflow automation that help teams spot risk, reduce wasted effort and improve pathway flow.
+          </p>
+
+          {/* CTA Section */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-6">
+            {/* Primary CTA Button */}
+            <Link
+              href="#contact"
+              onClick={handleScrollToSection('#contact')}
+              className="w-full sm:w-auto px-8 py-4 bg-primary text-background font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-[0_0_20px_rgba(56,189,248,0.25)] hover:shadow-[0_0_30px_rgba(56,189,248,0.4)] focus:outline-none focus:ring-2 focus:ring-primary/50"
+            >
+              Request a Demo
+            </Link>
+            
+            {/* Secondary CTA as text link */}
+            <Link
+              href="/case-studies"
+              className="w-full sm:w-auto text-slate-300 font-semibold hover:text-white hover:underline hover:decoration-slate-400 hover:underline-offset-4 transition-all duration-200 flex items-center justify-center gap-2 focus:outline-none"
+            >
+              View case studies
+              <span className="text-primary">→</span>
+            </Link>
+          </div>
+
+          {/* Trust/Credibility Line */}
+          <div className="text-sm text-slate-300 font-light tracking-wide">
+            Built from real NHS delivery and commercial analytics work.
+          </div>
+        </div>
       </div>
     </section>
   );
