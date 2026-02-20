@@ -8,8 +8,8 @@
     background-image: 
       linear-gradient(to bottom, transparent, #0B1120),
       radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-      linear-gradient(to right, rgba(30, 41, 59, 0.1) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(30, 41, 59, 0.1) 1px, transparent 1px);
+      linear-gradient(to right, rgba(30, 41, 59, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(30, 41, 59, 0.08) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -21,12 +21,28 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .animate-card-in {
+    animation: card-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
 
 /* Subtle pulse for "live" data feel */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
+}
+
+/* Card landing animation for server-rendered grids */
+@keyframes card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-pulse-subtle {

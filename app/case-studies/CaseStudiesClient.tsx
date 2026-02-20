@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { caseStudies, caseStudyFilters } from './caseStudiesData';
 
 export default function CaseStudiesClient() {
@@ -54,9 +55,13 @@ export default function CaseStudiesClient() {
       <section className="pb-24 bg-background">
         <div className="container px-4 md:px-6 mx-auto max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredStudies.map((study) => (
-              <div
+            {filteredStudies.map((study, index) => (
+              <motion.div
                 key={study.slug}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                 className="border border-white/10 bg-white/5 rounded-xl p-6 flex flex-col h-full hover:border-white/20 transition-colors"
               >
                 <div className="flex items-center justify-between mb-4">
@@ -73,8 +78,8 @@ export default function CaseStudiesClient() {
                 </p>
 
                 <ul className="space-y-2 mb-4">
-                  {study.outcomes.slice(0, 3).map((item, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-slate-200">
+                  {study.outcomes.slice(0, 3).map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-slate-200">
                       <span className="mt-1 w-1 h-1 rounded-full bg-primary/70" />
                       {item}
                     </li>
@@ -98,7 +103,7 @@ export default function CaseStudiesClient() {
                 >
                   View case study →
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

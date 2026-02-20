@@ -124,11 +124,12 @@ export default async function CapabilityPage({ params }: { params: Promise<{ slu
             <section>
               <h2 className="text-2xl font-bold mb-6">Related case studies</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                {relatedCases.map((caseStudy) => (
+                {relatedCases.map((caseStudy, idx) => (
                   <Link
                     key={caseStudy.slug}
                     href={`/case-studies/${caseStudy.slug}`}
-                    className="group border border-slate-200 rounded-lg p-6 hover:shadow-md hover:border-slate-300 transition-all duration-200"
+                    className="group border border-slate-200 rounded-lg p-6 hover:shadow-md hover:border-slate-300 transition-all duration-200 animate-card-in"
+                    style={{ animationDelay: `${idx * 80}ms` }}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>

@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { AnimatedGridPattern } from './ui/animated-grid-pattern';
-import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import { HeroBackgroundPaths } from './ui/background-paths';
 
 export default function Hero() {
   const handleScrollToSection = (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -14,22 +14,13 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20 bg-hero-navy">
       {/* Background Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Animated grid pattern with framer-motion */}
-        <AnimatedGridPattern
-          width={32}
-          height={32}
-          numSquares={60}
-          maxOpacity={0.18}
-          duration={2.2}
-          repeatDelay={0.35}
-          className={cn(
-            "text-white fill-white stroke-white",
-            "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
-            "inset-x-0 inset-y-[-35%] h-[220%] skew-y-12",
-          )}
+        {/* Animated paths - visible on dark backgrounds */}
+        <HeroBackgroundPaths
+          intensity="strong"
+          className="inset-0"
         />
         
         {/* Reduced glow intensity */}
@@ -52,12 +43,17 @@ export default function Hero() {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white/90 mb-8 max-w-5xl mx-auto leading-[1.15]">
+          <motion.h1
+            initial={{ y: -14, opacity: 0, filter: 'blur(6px)' }}
+            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white/90 mb-8 max-w-5xl mx-auto leading-[1.15]"
+          >
             <span className="text-white">Operational intelligence</span>{' '}
             <span className="bg-gradient-to-b from-white/80 to-white/40 bg-clip-text text-transparent">
               for digital health systems
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Supporting paragraph */}
           <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-light">

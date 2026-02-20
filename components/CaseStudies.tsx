@@ -54,7 +54,8 @@ export default function CaseStudies() {
           {cases.map((item, index) => (
             <div
               key={index}
-              className="group relative border border-slate-200 bg-white rounded-lg p-8 flex flex-col h-full shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300"
+              className="group relative border border-slate-200 bg-white rounded-lg p-8 flex flex-col h-full shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300 animate-card-in"
+              style={{ animationDelay: `${index * 70}ms` }}
             >
               <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
                 {item.headline}

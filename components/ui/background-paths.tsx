@@ -3,51 +3,108 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-function FloatingPaths({ position }: { position: number }) {
-    const paths = Array.from({ length: 36 }, (_, i) => ({
-        id: i,
-        d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
-            380 - i * 5 * position
-        } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
-            152 - i * 5 * position
-        } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
-            684 - i * 5 * position
-        } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-        color: `rgba(15,23,42,${0.1 + i * 0.03})`,
-        width: 0.5 + i * 0.03,
-    }));
+// Beacon primary blue - matches tailwind.config
+const PRIMARY_STROKE = "#38BDF8";
 
-    return (
-        <div className="absolute inset-0 pointer-events-none">
-            <svg
-                className="w-full h-full"
-                viewBox="0 0 696 316"
-                fill="none"
-            >
-                <title>Background Paths</title>
-                {paths.map((path) => (
-                    <motion.path
-                        key={path.id}
-                        d={path.d}
-                        stroke="#B8F4D4"
-                        strokeWidth={path.width}
-                        strokeOpacity={0.4 + path.id * 0.02}
-                        initial={{ pathLength: 0.3, opacity: 0.6 }}
-                        animate={{
-                            pathLength: 1,
-                            opacity: [0.4, 0.7, 0.4],
-                            pathOffset: [0, 1, 0],
-                        }}
-                        transition={{
-                            duration: 20 + Math.random() * 10,
-                            repeat: Number.POSITIVE_INFINITY,
-                            ease: "linear",
-                        }}
-                    />
-                ))}
-            </svg>
-        </div>
-    );
+function FloatingPaths({
+  position,
+  strokeColor = PRIMARY_STROKE,
+  strokeOpacityBase = 0.25,
+  strokeOpacityRange = 0.2,
+  duration = 12,
+}: {
+  position: number;
+  strokeColor?: string;
+  strokeOpacityBase?: number;
+  strokeOpacityRange?: number;
+  duration?: number;
+}) {
+  const paths = Array.from({ length: 36 }, (_, i) => ({
+    id: i,
+    d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
+      380 - i * 5 * position
+    } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
+      152 - i * 5 * position
+    } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
+      684 - i * 5 * position
+    } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
+    width: 0.5 + i * 0.03,
+  }));
+
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 696 316"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        <title>Background Paths</title>
+        {paths.map((path) => (
+          <motion.path
+            key={path.id}
+            d={path.d}
+            stroke={strokeColor}
+            strokeWidth={path.width}
+            strokeOpacity={strokeOpacityBase + path.id * 0.02}
+            initial={{ pathLength: 0.2, opacity: 0.5 }}
+            animate={{
+              pathLength: [0.2, 1, 0.2],
+              opacity: [
+                strokeOpacityBase,
+                strokeOpacityBase + strokeOpacityRange,
+                strokeOpacityBase,
+              ],
+            }}
+            transition={{
+              duration: duration + path.id * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+/** Lightweight hero background - animated SVG paths. Use as overlay in Hero/PageHero. */
+export function HeroBackgroundPaths({
+  className,
+  intensity = "default",
+}: {
+  className?: string;
+  intensity?: "default" | "subtle" | "strong";
+} = {}) {
+  const config =
+    intensity === "subtle"
+      ? { base: 0.15, range: 0.15, duration: 14 }
+      : intensity === "strong"
+        ? { base: 0.35, range: 0.25, duration: 10 }
+        : { base: 0.25, range: 0.2, duration: 12 };
+
+  return (
+    <div
+      className={["absolute inset-0 overflow-hidden opacity-80", className]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <FloatingPaths
+        position={1}
+        strokeColor={PRIMARY_STROKE}
+        strokeOpacityBase={config.base}
+        strokeOpacityRange={config.range}
+        duration={config.duration}
+      />
+      <FloatingPaths
+        position={-1}
+        strokeColor={PRIMARY_STROKE}
+        strokeOpacityBase={config.base}
+        strokeOpacityRange={config.range}
+        duration={config.duration}
+      />
+    </div>
+  );
 }
 
 export function BackgroundPaths({

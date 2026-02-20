@@ -10,8 +10,8 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Dark Hero Section */}
-      <div className="bg-slate-950 text-white">
+      {/* Dark Hero Section - matches hero-navy token used across all heroes */}
+      <div className="bg-hero-navy text-white">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white mb-8 transition-colors">
             <span>←</span>

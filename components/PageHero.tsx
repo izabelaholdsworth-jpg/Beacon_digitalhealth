@@ -3,7 +3,8 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import { AnimatedGridPattern } from './ui/animated-grid-pattern';
+import { motion } from 'framer-motion';
+import { HeroBackgroundPaths } from './ui/background-paths';
 import { cn } from '@/lib/utils';
 
 interface PageHeroProps {
@@ -32,25 +33,18 @@ export default function PageHero({
   return (
     <section className={cn(
       'relative overflow-hidden',
-      // Force explicit background color: deep navy for subpages, slate-950 for homepage
+      // Single hero background token for premium consistency (hero-navy = #081226)
       isHomepage
-        ? 'bg-slate-950 min-h-[90vh] flex items-center pt-20'
-        : 'bg-hero-navy pt-14 md:pt-16 lg:pt-18 pb-8 md:pb-10 lg:pb-12',
+        ? 'bg-hero-navy min-h-[90vh] flex items-center pt-20'
+        : 'bg-hero-navy pt-10 md:pt-12 pb-6 md:pb-8',
       className
     )}>
       {/* Background: Dark navy base + grid overlay + glow */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Animated grid pattern - subtle texture overlay */}
-        <AnimatedGridPattern
-          width={32}
-          height={32}
-          numSquares={isHomepage ? 60 : 50}
-          maxOpacity={isHomepage ? 0.18 : 0.12}
-          duration={2.2}
-          repeatDelay={0.35}
+        {/* Animated paths - visible on dark backgrounds */}
+        <HeroBackgroundPaths
+          intensity={isHomepage ? 'strong' : 'default'}
           className={cn(
-            'text-white fill-white stroke-white',
-            '[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]',
             'inset-x-0 inset-y-[-35%] h-[220%] skew-y-12',
           )}
         />
@@ -86,12 +80,17 @@ export default function PageHero({
         )}
 
         <div className="max-w-4xl">
-          <h1 className={cn(
-            'font-bold text-white mb-4 tracking-tight leading-tight',
-            isHomepage ? 'text-4xl md:text-6xl lg:text-8xl' : 'text-4xl md:text-6xl'
-          )}>
+          <motion.h1
+            initial={{ y: -10, opacity: 0, filter: 'blur(4px)' }}
+            animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className={cn(
+              'font-bold text-white mb-4 tracking-tight leading-tight',
+              isHomepage ? 'text-4xl md:text-6xl lg:text-8xl' : 'text-4xl md:text-6xl'
+            )}
+          >
             {title}
-          </h1>
+          </motion.h1>
 
           {subtitle && (
             <p className={cn(

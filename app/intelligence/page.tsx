@@ -130,7 +130,10 @@ export default function IntelligencePage() {
             <h2 className="text-3xl font-bold mb-8">Intelligence types</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {intelligenceTypes.map((type, idx) => (
-                <div key={idx} className="border border-slate-200 rounded-lg p-6 hover:shadow-md hover:border-slate-300 transition-all">
+                <div
+                  key={idx}
+                  className="border border-slate-200 rounded-lg p-6 hover:shadow-md hover:border-slate-300 transition-all"
+                >
                   <div className="w-10 h-10 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-center mb-4">
                     <type.icon className="w-5 h-5 text-sky-600" strokeWidth={1.5} />
                   </div>
